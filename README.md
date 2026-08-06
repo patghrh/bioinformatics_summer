@@ -21,3 +21,16 @@ mkdir project && cd project
 
 
 `&` - runs command in background
+
+## Environment
+
+Python version:
+3.14.3
+
+Main packages:
+- biopython 1.87
+- numpy 2.5.1
+
+Activate environment:
+
+source .venv/bin/activate
