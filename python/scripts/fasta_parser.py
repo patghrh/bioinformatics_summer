@@ -19,5 +19,7 @@ def parse_fasta(filename):
                     print(f"Warning: sequence found before fasta header: {line}")
     return sequences
 
-result = parse_fasta("data/raw/example.fasta")
-print(result)
+# Test parser when running this file directly
+if __name__ == "__main__":
+    result = parse_fasta("data/raw/example.fasta")
+    print(result)
