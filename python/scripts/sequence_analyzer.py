@@ -1,10 +1,5 @@
+VALID_BASES = "ATGC"
 def analyze_sequence(sequence):
-    a_count = sequence.count("A")
-    t_count = sequence.count("T")
-    g_count = sequence.count("G")
-    c_count = sequence.count("C")
-
-    VALID_BASES = "ATGC"
     correct_sequence = []
     invalid_nucleotides = []
 
@@ -13,6 +8,12 @@ def analyze_sequence(sequence):
             correct_sequence.append(nucleotide)
         else:
             invalid_nucleotides.append(nucleotide)
+
+    a_count = correct_sequence.count("A")
+    t_count = correct_sequence.count("T")
+    g_count = correct_sequence.count("G")
+    c_count = correct_sequence.count("C")
+
     if len(correct_sequence) > 0:
         gc_content = (g_count + c_count) / len(correct_sequence) * 100
     else:
