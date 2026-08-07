@@ -66,3 +66,28 @@ I had two different versions of history:
 `git pull --rebase` combined both histories into one linear history.  
 Because the same file was modified in both versions, Git created a conflict.  
 I resolved it by keeping my newer version of `sequence_analyzer.py`.
+
+## Data parsing and validation notes
+
+When working with biological data, do not assume that input files are always correct.
+
+Important things to remember:
+
+- Use `.strip()` when reading lines to remove unnecessary whitespace and newline characters.
+- FASTA files contain:
+  - header lines starting with `>`
+  - sequence lines containing nucleotides
+- The parser should only read and organize data.
+- Sequence validation and analysis should be handled separately.
+
+Possible problems in input files:
+- sequence before the first FASTA header
+- empty sequences
+- duplicated IDs
+- invalid nucleotide characters
+
+Good practice:
+Separate responsibilities:
+- parser → reads and organizes data
+- analyzer → validates sequences and calculates properties
+- reporter → displays results
