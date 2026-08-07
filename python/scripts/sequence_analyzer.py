@@ -40,9 +40,11 @@ def print_report(result):
     print(f"GC content: {result['gc_content']}%")
     print(f"Invalid nucleotides: {result['invalid_nucleotides']}")
 
-result1 = analyze_sequence("ATGCGATXG")
-print_report(result1)
-result2 = analyze_sequence("CCCCGGGG")
-print_report(result2)
-result3 = analyze_sequence("XXXXXXXX")
-print_report(result3)
+
+if __name__ == "__main__":
+    result1 = analyze_sequence("ATGCGATXG")
+    print_report(result1)
+    result2 = analyze_sequence("CCCCGGGG")
+    print_report(result2)
+    result3 = analyze_sequence("XXXXXXXX")
+    print_report(result3)
