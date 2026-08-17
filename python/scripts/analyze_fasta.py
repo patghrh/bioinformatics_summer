@@ -2,14 +2,22 @@ import sys
 from fasta_parser import parse_fasta
 from sequence_analyzer import analyze_sequence, print_report
 
-if len(sys.argv) > 1:
-    filename = sys.argv[1]
-else:
-    filename = input("Enter file path: ")
+def main():
+    if len(sys.argv) > 1:
+        filename = sys.argv[1]
+    else:
+        filename = input("Enter file path: ")
 
-sequences = parse_fasta(filename)
+    try:
+        sequences = parse_fasta(filename)
+    except FileNotFoundError:
+        print("Provided file does not exist.")
+        return
 
-for seq_id, sequence in sequences.items():
-    result = analyze_sequence(sequence)
-    print(seq_id)
-    print_report(result)
+    for seq_id, sequence in sequences.items():
+        result = analyze_sequence(sequence)
+        print(seq_id)
+        print_report(result)
+
+if __name__ == "__main__":
+    main()
