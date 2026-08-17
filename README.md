@@ -91,3 +91,16 @@ Separate responsibilities:
 - parser → reads and organizes data
 - analyzer → validates sequences and calculates properties
 - reporter → displays results
+
+### Running FASTA analysis (analyze_fasta.py)
+
+The FASTA analysis script can be run in two ways:
+1) You can provide the file path directly as a command-line argument:
+```bash
+python python/scripts/analyze_fasta.py <filepath>
+```
+or 
+2) run the script without an argumetn. The program will then ask for the file path:
+```bash
+python python/scripts/analyze_fasta.py
+```
