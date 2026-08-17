@@ -99,8 +99,9 @@ The FASTA analysis script can be run in two ways:
 ```bash
 python python/scripts/analyze_fasta.py <filepath>
 ```
-or 
-2) run the script without an argumetn. The program will then ask for the file path:
+or..
+
+2) Run the script without an argumetn. The program will then ask for the file path:
 ```bash
 python python/scripts/analyze_fasta.py
 ```
