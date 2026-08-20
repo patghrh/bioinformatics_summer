@@ -12,7 +12,10 @@ def parse_fasta(filename):
 
             if line.startswith(">"):
                 seq_id = line[1:]
-                if seq_id in sequences:
+                if seq_id == "":
+                    skip_sequence = True
+                    print(f"Warning: FASTA header has no sequence ID.")    
+                elif seq_id in sequences:
                     skip_sequence = True
                     print(f"Warning: duplicate sequence ID: {seq_id}")
                 else:
