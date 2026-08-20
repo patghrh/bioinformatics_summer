@@ -1,5 +1,8 @@
 VALID_BASES = "ATGC"
 def analyze_sequence(sequence):
+    if len(sequence) == 0:
+        raise ValueError("Sequence is empty.")
+
     correct_sequence = []
     invalid_nucleotides = []
 

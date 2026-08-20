@@ -15,9 +15,12 @@ def main():
         return
 
     for seq_id, sequence in sequences.items():
-        result = analyze_sequence(sequence)
-        print(seq_id)
-        print_report(result)
+        try:
+            result = analyze_sequence(sequence)
+            print(seq_id)
+            print_report(result)
+        except ValueError:
+            print(f"Warning: Sequence {seq_id} is empty.")
 
 if __name__ == "__main__":
     main()
