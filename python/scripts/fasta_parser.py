@@ -1,6 +1,7 @@
 def parse_fasta(filename):
     sequences = {}
     seq_id = None
+    skip_sequence = False
 
     with open(filename) as file:
         for line in file:
@@ -11,12 +12,18 @@ def parse_fasta(filename):
 
             if line.startswith(">"):
                 seq_id = line[1:]
-                sequences[seq_id] = ""
-            else:
-                if seq_id is not None:
-                    sequences[seq_id] += line
+                if seq_id in sequences:
+                    skip_sequence = True
+                    print(f"Warning: duplicate sequence ID: {seq_id}")
                 else:
-                    print(f"Warning: sequence found before fasta header: {line}")
+                    skip_sequence = False
+                    sequences[seq_id] = ""
+            else:
+                if not skip_sequence:
+                    if seq_id is not None:
+                        sequences[seq_id] += line
+                    else:
+                        print(f"Warning: sequence found before fasta header: {line}")
     return sequences
 
 # Test parser when running this file directly
