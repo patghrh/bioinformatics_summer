@@ -105,3 +105,83 @@ or..
 ```bash
 python python/scripts/analyze_fasta.py
 ```
+
+## Analyzer design and error handling
+
+When designing the analyzer, we should remember that input data may contain different types of errors or unexpected cases. The program should handle these cases deliberately rather than assuming that every FASTA record is valid.
+
+Examples include:
+
+* empty sequences,
+* invalid nucleotides,
+* duplicate sequence IDs,
+* invalid FASTA records, such as a sequence appearing before a header or a header without an ID.
+
+Not every problem should stop the whole program. Depending on the type of error, we can display a warning, skip the problematic sequence, or raise an exception and handle it at a higher level.
+
+We also separate responsibilities between modules:
+
+* `fasta_parser.py` — reads FASTA data and handles structural problems in the input,
+* `sequence_analyzer.py` — analyzes individual sequences,
+* `analyze_fasta.py` — runs the analysis, handles errors, and displays the results.
+
+### Error handling
+
+We learned how to use `try` / `except` to handle expected errors without stopping the entire program.
+
+We also use boolean variables as flags to control program flow. For example:
+
+```python
+skip_sequence = True
+```
+
+means that the current FASTA record should be skipped, while:
+
+```python
+skip_sequence = False
+```
+
+means that the sequence can be processed normally.
+
+`skip_sequence` is just a regular variable whose value we define ourselves. The program then uses its `True`/`False` value to decide what to do.
+
+## Testing with pytest
+
+We introduced `pytest` for automated testing.
+
+Tests are stored in the `tests/` directory and test functions start with `test_`.
+
+Basic example:
+
+```python
+def test_parse_fasta():
+    result = parse_fasta("data/raw/example.fasta")
+    assert result["seq1_example"] == "ATGCGATCGATCG"
+```
+
+`assert` checks whether the actual result matches our expected result. If the condition is true, the test passes. If it is false, pytest reports a failure.
+
+We also learned how to use `tmp_path` to create temporary files for tests:
+
+```python
+def test_sequence_before_header(tmp_path):
+    fasta_file = tmp_path / "test.fasta"
+    fasta_file.write_text("ATGC\n>seq1\nCCCC")
+
+    result = parse_fasta(fasta_file)
+
+    assert result["seq1"] == "CCCC"
+```
+
+This allows us to test specific input cases without adding artificial files to `data/raw/`.
+
+The `pytest.ini` file configures pytest so that our modules in `python/scripts/` can be imported during testing.
+
+### Current parser tests
+
+The parser is currently tested for:
+
+* correct parsing of a valid sequence,
+* duplicate sequence IDs,
+* FASTA headers without a sequence ID,
+* sequences appearing before the first FASTA header.
