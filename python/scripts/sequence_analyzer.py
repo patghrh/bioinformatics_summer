@@ -1,4 +1,13 @@
+from Bio.Seq import Seq
+
 VALID_BASES = "ATGC"
+COMPLEMENT = {
+    "A": "T",
+    "T": "A",
+    "G": "C",
+    "C": "G",
+}
+
 def analyze_sequence(sequence):
     if len(sequence) == 0:
         raise ValueError("Sequence is empty.")
@@ -31,6 +40,23 @@ def analyze_sequence(sequence):
         "gc_content": round(gc_content, 2),
         "invalid_nucleotides": invalid_nucleotides,
     }
+
+def reverse_complement(sequence):
+    complement = ""
+
+    for nucleotide in sequence:
+        if nucleotide not in COMPLEMENT:
+            raise ValueError(f"Invalid nucleotide: {nucleotide}")
+
+        complement += COMPLEMENT[nucleotide]
+
+    return complement[::-1]
+
+def transcribe_dna(sequence):
+    return sequence.replace("T", "U")
+
+def translate_dna(sequence):
+    return str(Seq(sequence).translate())
 
 def print_report(result):
     print("Sequence report\n---------------")
